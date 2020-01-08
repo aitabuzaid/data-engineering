@@ -12,7 +12,7 @@ songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id varchar,
                                                               title varchar,
                                                               artist_id varchar, 
                                                               year int,
-                                                              duration int);
+                                                              duration float);
 """)
 
 user_table_create = ("""
@@ -35,7 +35,8 @@ songplay_table_insert = ("""
 user_table_insert = ("""
 """)
 
-song_table_insert = ("""
+song_table_insert = ("""INSERT INTO songs (song_id, title, artist_id, year, duration)
+                        VALUES(%s, %s, %s, %s, %s)
 """)
 
 artist_table_insert = ("""
