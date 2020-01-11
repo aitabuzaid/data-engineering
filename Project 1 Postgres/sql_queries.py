@@ -1,14 +1,21 @@
 # DROP TABLES
 
-songplay_table_drop = ""
+songplay_table_drop = "DROP TABLE IF EXISTS songplays"
 user_table_drop = "DROP TABLE IF EXISTS users"
 song_table_drop = "DROP TABLE IF EXISTS songs"
 artist_table_drop = "DROP TABLE IF EXISTS artists"
 time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
- 
-songplay_table_create = ("""
+
+songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (time_stamp timestamp,
+                                                                  user_id int,
+                                                                  level varchar,
+                                                                  song_id varchar,
+                                                                  artist_id varchar,
+                                                                  session_id int,
+                                                                  location varchar,
+                                                                  user_agent varchar);                                                                  
 """)
 
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int,
@@ -43,7 +50,8 @@ time_table_create = ("""CREATE TABLE IF NOT EXISTS time (time_stamp timestamp,
 
 # INSERT RECORDS
 
-songplay_table_insert = ("""
+songplay_table_insert = ("""INSERT INTO songplays (time_stamp, user_id, level, song_id, artist_id, session_id, location, user_agent)
+                            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
 """)
 
 user_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level)
@@ -65,11 +73,13 @@ time_table_insert = ("""INSERT INTO time (time_stamp, hour, day, week_of_year, m
 
 # FIND SONGS
 
-song_select = ("""
+song_select = ("""SELECT songs.song_id, artists.artist_id FROM
+                         songs JOIN artists ON songs.artist_id = artists.artist_id
+                  WHERE songs.title = %s AND artists.artist_name = %s AND songs.duration = %s
 """)
 
 # QUERY LISTS
-create_table_queries = [time_table_create, song_table_create, artist_table_create, user_table_create]
-drop_table_queries = [time_table_drop, song_table_drop, artist_table_drop, user_table_drop]
-#create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
-#drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
+#create_table_queries = [time_table_create, song_table_create, artist_table_create, user_table_create]
+#drop_table_queries = [time_table_drop, song_table_drop, artist_table_drop, user_table_drop]
+create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
+drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
