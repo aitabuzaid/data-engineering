@@ -33,4 +33,6 @@ In order to run the ETL pipeline, execute the following code in the terminal:
 
 -> python3 etl.py
 
-If the program is successful, load the test.ipynb notebook in order to perform sample queries.
+If the program is successful, load the test.ipynb notebook in order to perform sample queries. The create_table.py file
+imports the sql_queries.py file which includes SQL queries to create and drop tables, and insert data into the tables.
+The etl.ipynb file file provided starter code that helped my complete the etl.py file.
