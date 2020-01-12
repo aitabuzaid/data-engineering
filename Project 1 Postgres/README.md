@@ -1,5 +1,6 @@
 ## Creating an ETL pipeline for Sparkify 
 Author: Abdulrahman Abuzaid
+
 Date: Jan 12, 2020
 
 This project creates a postgres database to faciliate analyzing data collected on songs
@@ -29,6 +30,7 @@ artists table, songs table, and the time table.
 In order to run the ETL pipeline, execute the following code in the terminal:
 
 -> python3 create_tables.py
+
 -> python3 etl.py
 
 If the program is successful, load the test.ipynb notebook in order to perform sample queries.
