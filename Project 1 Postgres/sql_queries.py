@@ -18,28 +18,25 @@ songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (time_stamp tim
                                                                   user_agent varchar);                                                                  
 """)
 
-user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int,
+user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY,
                                                           first_name varchar,
                                                           last_name varchar, 
                                                           gender varchar,
-                                                          level varchar,
-                                                          UNIQUE(user_id));
+                                                          level varchar);
 """)
 
-song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id varchar,
+song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY,
                                                           title varchar,
                                                           artist_id varchar, 
                                                           year int,
-                                                          duration float,
-                                                          UNIQUE(song_id));
+                                                          duration float);
 """)
 
-artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (artist_id varchar,
+artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY,
                                                               artist_name varchar,
                                                               artist_location varchar, 
                                                               artist_latitude float,
-                                                              artist_longitude float,
-                                                              UNIQUE(artist_id));
+                                                              artist_longitude float);
 """)
 ['Time Stamp', 'Hour', 'Day', 'Week of Year', 'Month', 'Year', 'Weekday']
 time_table_create = ("""CREATE TABLE IF NOT EXISTS time (time_stamp timestamp,
