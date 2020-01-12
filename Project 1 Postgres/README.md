@@ -27,6 +27,7 @@ artists table, songs table, and the time table.
  
 ## Execution Guide
 In order to run the ETL pipeline, execute the following code in the terminal:
+
 -> python3 create_tables.py
 -> python3 etl.py
 
