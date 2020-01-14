@@ -42,10 +42,11 @@ LIMIT 3
 
 ### Result
 
-user_id	first_name	last_name	level	count
-49	Chloe	Cuevas	paid	689
-80	Tegan	Levine	paid	665
-97	Kate	Harrell	paid	557
+| user_id | first_name | last_name  |  level |  count |
+|---------|------------|------------|--------|--------|
+| 49      | Chloe      |   Cuevas   |  paid  |  689   |
+| 80      | Tegan      |   Levine   |  paid  |  665   |
+| 97      | kate       |   Harell   |  paid  |  557   |
 
 ### Query 2
 
@@ -53,14 +54,16 @@ user_id	first_name	last_name	level	count
 
 ### Result
 
-level	count
-free	74
-paid	22
+| level | count |
+|-------|-------|
+| free  |  74   |
+| paid  |  22   |
 
 ### Query 3
 
 %sql SELECT gender, COUNT(user_id) FROM users GROUP BY gender
 
-gender	count
-F	55
-M	41
+| gender | count |
+|--------|-------|
+| male   |  55   |
+| female |  41   |
