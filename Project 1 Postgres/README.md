@@ -1,6 +1,5 @@
 ## Creating an ETL pipeline for Sparkify 
 Author: Abdulrahman Abuzaid
-
 Date: Jan 12, 2020
 
 This project creates a postgres database to faciliate analyzing data collected on songs
@@ -28,11 +27,40 @@ artists table, songs table, and the time table.
  
 ## Execution Guide
 In order to run the ETL pipeline, execute the following code in the terminal:
-
 -> python3 create_tables.py
-
 -> python3 etl.py
 
-If the program is successful, load the test.ipynb notebook in order to perform sample queries. The create_table.py file
-imports the sql_queries.py file which includes SQL queries to create and drop tables, and insert data into the tables.
-The etl.ipynb file file provided starter code that helped my complete the etl.py file.
+If the program is successful, load the test.ipynb notebook in order to perform sample queries.
+
+## Sample Queries
+### Query 1
+%sql SELECT songplays.user_id, users.first_name, users.last_name, users.level, COUNT(songplays.user_id)  \
+FROM songplays JOIN users ON songplays.user_id = users.user_id \
+GROUP BY songplays.user_id, users.first_name, users.last_name, users.level \
+ORDER BY count DESC \
+LIMIT 3
+
+### Result
+
+user_id	first_name	last_name	level	count
+49	Chloe	Cuevas	paid	689
+80	Tegan	Levine	paid	665
+97	Kate	Harrell	paid	557
+
+### Query 2
+
+%sql SELECT level, COUNT(user_id) FROM users GROUP BY level
+
+### Result
+
+level	count
+free	74
+paid	22
+
+### Query 3
+
+%sql SELECT gender, COUNT(user_id) FROM users GROUP BY gender
+
+gender	count
+F	55
+M	41
