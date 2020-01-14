@@ -26,10 +26,10 @@ user_table_create = ("""CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KE
 """)
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY,
-                                                          title varchar,
-                                                          artist_id varchar, 
-                                                          year int,
-                                                          duration float);
+                                                          title varchar NOT NULL,
+                                                          artist_id varchar NOT NULL, 
+                                                          year int NOT NULL,
+                                                          duration float NOT NULL);
 """)
 
 artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY,
@@ -39,7 +39,7 @@ artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (artist_id varchar 
                                                               artist_longitude float);
 """)
 ['Time Stamp', 'Hour', 'Day', 'Week of Year', 'Month', 'Year', 'Weekday']
-time_table_create = ("""CREATE TABLE IF NOT EXISTS time (time_stamp timestamp NOT NULL,
+time_table_create = ("""CREATE TABLE IF NOT EXISTS time (time_stamp timestamp PRIMARY KEY,
                                                          hour int NOT NULL,
                                                          day int NOT NULL,
                                                          week_of_year int NOT NULL,
