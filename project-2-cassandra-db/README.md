@@ -1,14 +1,15 @@
 ## Creating an ETL pipeline for Sparkify Using Apache Cassandra with Query Optimization
 Author: Abdulrahman Abuzaid
+
 Date: Jan 15, 2020
 
 This project creates an Apache Cassandra database to faciliate analyzing data collected on songs
-and user activities for the a music streaming app called Sparkify. The data is on different CSV files
+and user activities for the a music streaming app 'Sparkify'. The data is on different CSV files
 and the aim of this project is to extract data from these files, transform it by merging it into one CSV file, 
 and finally load it to the NoSQL database that is optimized to answer the following questions:
 
 The new database helps Sparkify answer the three questions below:
-1. Provide the artist, song title and song's length in the music app history during sessionId = x, and itemInSession = y
+1. Provide the artist, song title and song's length in the music app history during sessionId = 338, and itemInSession = 4
 
 2. Provide the name of artist, song (sorted by itemInSession) and user (first and last name) for userid = 10, and sessionid = 182
 
@@ -17,18 +18,19 @@ The new database helps Sparkify answer the three questions below:
  
 ## Database Design
 Since Sparkify is interested in three different questions, the queries should be designed to answer these questions optimally. 
-A NoSQL database is warranted, and in this scenario we will use a Cassandra database with the following primary and clustering keys.
+A NoSQL database is warranted, and in this scenario we will use a Cassandra database with the following primary keys. Justification
+for using these primary keys is available in the Jupyter notebook.
 
 ### Query 1
- - Primary Key: session_id
+ - Partition Key: session_id
  - Clustering columns: item_in_session
  
 ### Query 2
- - Primary Key: user_id
+ - Partition Key: user_id
  - Clustering columns: session_id, item_in_session
  
 ### Query 3
- - Primary Key: song_title
+ - Partition Key: song_title
  - Clustering columns: session_id, item_in_session
 
 ## Packages Used
@@ -38,7 +40,7 @@ A NoSQL database is warranted, and in this scenario we will use a Cassandra data
  - csv
  
 ## Execution Guide
-Part 1 of the notebook is concerned with extracting and transforming the different csv files into one csv file. While part 2 creates
+Part 1 of theJupyter notebook is concerned with extracting and transforming the different csv files into one csv file. While part 2 creates
 Cassandra tables and loads the data into the three tables.
 
 ## Sample Queries
