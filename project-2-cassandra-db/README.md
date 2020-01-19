@@ -55,7 +55,6 @@ Faithless Music Matters (Mark Knight Dub) 495.30731201171875
 SELECT artist_name, song_title, item_in_session, first_name, last_name \
          FROM song_play_user \
          WHERE user_id = 10 AND session_id = 182 \
-         ORDER BY session_id, item_in_session
 
 ### Result
 Down To The Bone Keep On Keepin' On 0 Sylvie Cruz
