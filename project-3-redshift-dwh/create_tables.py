@@ -110,6 +110,7 @@ def main():
 
     myClusterProps = redshift.describe_clusters(ClusterIdentifier=DWH_CLUSTER_IDENTIFIER)['Clusters'][0]
     print(prettyRedshiftProps(myClusterProps))
+    #if (myClusterProps[])
     DWH_ENDPOINT = myClusterProps['Endpoint']['Address']
     DWH_ROLE_ARN = myClusterProps['IamRoles'][0]['IamRoleArn']
     print("DWH_ENDPOINT :: ", DWH_ENDPOINT)
@@ -119,18 +120,10 @@ def main():
     
     cur = conn.cursor()
 
-    #drop_tables(cur, conn)
-    #create_tables(cur, conn)
-
-    conn.close()
+    drop_tables(cur, conn)
+    create_tables(cur, conn)
     
-    s3 = boto3.resource('s3',
-                   region_name = "us-west-2",
-                   aws_access_key_id=KEY,
-                   aws_secret_access_key=SECRET)
-    s3_log_bucket =  s3.Bucket('udacity-dend')
-    #for obj in s3_log_bucket.objects.filter(Prefix='song-data/A'):
-    #   print(obj)
+    conn.close()
 
 if __name__ == "__main__":
     main()
