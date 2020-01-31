@@ -83,30 +83,54 @@ songplay_table_create= ("""CREATE TABLE IF NOT EXISTS songplays (
     user_agent      VARCHAR);
 """)
 
-user_table_create = ("""
+user_table_create = ("""CREATE TABLE IF NOT EXISTS users (
+    user_id         INTEGER,
+    first_name      VARCHAR,
+    last_name       VARCHAR,
+    gender          VARCHAR,
+    level           VARCHAR);
 """)
 
-song_table_create = ("""
+song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (
+    song_id         VARCHAR,
+    title           VARCHAR,
+    artist_id       VARCHAR,
+    year            INTEGER,
+    duration        NUMERIC);
 """)
 
-artist_table_create = ("""
+artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (
+    artist_id       VARCHAR,
+    name            VARCHAR,
+    location        VARCHAR,
+    latitude        NUMERIC,
+    longitude       NUMERIC);
 """)
 
-time_table_create = ("""
+time_table_create = ("""CREATE TABLE IF NOT EXISTS time (
+    start_time      DATETIME,
+    hour            INTEGER,
+    day             INTEGER,
+    week            INTEGER,
+    month           INTEGER,
+    year            INTEGER,
+    weekday         INTEGER) 
 """)
 
 # STAGING TABLES
 
 staging_events_copy = ("""
-    copy staging_events from {} 
+    COPY staging_events FROM {} 
     iam_role {}
-    format as json {};
+    COMPUPDATE OFF REGION 'us-west-2'
+    FORMAT AS JSON {};
 """).format(LOG_DATA, ARN, LOG_JSONPATH)
 
 staging_songs_copy = ("""
-    copy staging_songs from {} 
+    COPY staging_songs FROM {} 
     iam_role {}
-    format as json 'auto';
+    COMPUPDATE OFF REGION 'us-west-2';
+    FORMAT AS JSON 'auto';
 """).format(SONG_DATA, ARN)
 
 
