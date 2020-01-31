@@ -22,6 +22,7 @@ DWH_IAM_ROLE_NAME      = config.get("DWH", "DWH_IAM_ROLE_NAME")
 ARN                    = config.get("IAM_ROLE", "ARN")
     
 LOG_DATA               = config.get("S3", "LOG_DATA")
+LOG_JSONPATH           = config.get("S3", "LOG_JSONPATH")
 SONG_DATA              = config.get("S3", "SONG_DATA")
 
 # DROP TABLES
@@ -40,19 +41,19 @@ staging_events_table_create= ("""CREATE TABLE IF NOT EXISTS staging_events (
     artist          VARCHAR,
     auth            VARCHAR,
     first_name      VARCHAR,
-    gender          VARCHAR(1),
+    gender          VARCHAR,
     item_in_session INTEGER,
     last_name       VARCHAR,
     length          NUMERIC,
-    level           VARCHAR(4),
+    level           VARCHAR,
     location        VARCHAR,
-    method          VARCHAR(3),
+    method          VARCHAR,
     page            VARCHAR,
-    registration    INTEGER,
+    registration    BIGINT,
     session_id      INTEGER,
     song            VARCHAR,
     status          INTEGER,
-    time_stamp      DATETIME,
+    time_stamp      BIGINT,
     user_agent      VARCHAR,
     user_id         INTEGER);
 """)
@@ -99,8 +100,8 @@ time_table_create = ("""
 staging_events_copy = ("""
     copy staging_events from {} 
     iam_role {}
-    format as json 'auto';
-""").format(LOG_DATA, ARN)
+    format as json {};
+""").format(LOG_DATA, ARN, LOG_JSONPATH)
 
 staging_songs_copy = ("""
     copy staging_songs from {} 
@@ -131,5 +132,5 @@ time_table_insert = ("""
 #create_table_queries = [staging_events_table_create, staging_songs_table_create, songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 create_table_queries = [staging_events_table_create, staging_songs_table_create]
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
-copy_table_queries = [staging_songs_copy]
+copy_table_queries = [staging_songs_copy, staging_events_copy]
 insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]

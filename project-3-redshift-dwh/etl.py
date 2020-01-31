@@ -47,13 +47,14 @@ def main():
                    aws_access_key_id=KEY,
                    aws_secret_access_key=SECRET)
     s3_log_bucket =  s3.Bucket('udacity-dend')
-    #for obj in s3_log_bucket.objects.filter(Prefix='song-data/A/A'):
-    #    print(obj)
+    #s3_log_bucket.download_file('log_json_path.json', 'log_json_path.json')
+    #for obj in s3_log_bucket.objects.filter(Prefix='log_json'):
+    #    print(obj.get()['Body'])
     #print('s3://udacity-dend/log_json_path.json'))
     
-    #load_staging_tables(cur, conn)
+    load_staging_tables(cur, conn)
     #insert_tables(cur, conn)
-    print(cur.execute("SELECT * FROM staging_songs"))
+    #print(cur.execute("SELECT * FROM staging_songs"))
     conn.commit()
 
     conn.close()
