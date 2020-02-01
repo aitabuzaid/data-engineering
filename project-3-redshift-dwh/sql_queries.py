@@ -84,24 +84,24 @@ songplay_table_create= ("""CREATE TABLE IF NOT EXISTS songplays (
 """)
 
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users (
-    user_id         INTEGER,
-    first_name      VARCHAR,
-    last_name       VARCHAR,
-    gender          VARCHAR,
-    level           VARCHAR);
+    user_id         INTEGER NOT NULL UNIQUE,
+    first_name      VARCHAR NOT NULL,
+    last_name       VARCHAR NOT NULL,
+    gender          VARCHAR NOT NULL,
+    level           VARCHAR NOT NULL);
 """)
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (
-    song_id         VARCHAR,
-    title           VARCHAR,
-    artist_id       VARCHAR,
-    year            INTEGER,
-    duration        NUMERIC);
+    song_id         VARCHAR NOT NULL UNIQUE,
+    title           VARCHAR NOT NULL,
+    artist_id       VARCHAR NOT NULL,
+    year            INTEGER NOT NULL,
+    duration        NUMERIC NOT NULL);
 """)
 
 artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (
-    artist_id       VARCHAR,
-    name            VARCHAR,
+    artist_id       VARCHAR NOT NULL UNIQUE,
+    name            VARCHAR NOT NULL,
     location        VARCHAR,
     latitude        NUMERIC,
     longitude       NUMERIC);
@@ -153,12 +153,36 @@ WHERE  e.page = 'NextSong'
 """)
 
 user_table_insert = ("""
+INSERT INTO users (user_id, first_name, last_name, gender, level)
+SELECT user_id,
+       first_name,
+       last_name,
+       gender,
+       level
+FROM   staging_events
+WHERE  user_id IS NOT NULL
 """)
 
 song_table_insert = ("""
+INSERT INTO songs (song_id, title, artist_id, year, duration)
+SELECT song_id,
+       title,
+       artist_id,
+       year,
+       duration
+FROM   staging_songs
+WHERE  song_id IS NOT NULL
 """)
 
 artist_table_insert = ("""
+INSERT INTO artists (artist_id, name, location, latitude, longitude)
+SELECT artist_id,
+       artist_name      AS name,
+       artist_location  AS location,
+       artist_latitude  AS latitude,
+       artist_longitude AS longitude
+FROM   staging_songs
+WHERE  artist_id IS NOT NULL
 """)
 
 time_table_insert = ("""
@@ -170,5 +194,6 @@ create_table_queries = [staging_events_table_create, staging_songs_table_create,
 
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 copy_table_queries = [staging_songs_copy, staging_events_copy]
-insert_table_queries = [songplay_table_insert]
+insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert,
+                        artist_table_insert]
 #insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
