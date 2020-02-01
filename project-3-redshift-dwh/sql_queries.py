@@ -108,13 +108,13 @@ artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (
 """)
 
 time_table_create = ("""CREATE TABLE IF NOT EXISTS time (
-    start_time      DATETIME,
-    hour            INTEGER,
-    day             INTEGER,
-    week            INTEGER,
-    month           INTEGER,
-    year            INTEGER,
-    weekday         INTEGER) 
+    start_time      DATE NOT NULL UNIQUE,
+    hour            INTEGER NOT NULL,
+    day             INTEGER NOT NULL,
+    week            INTEGER NOT NULL,
+    month           INTEGER NOT NULL,
+    year            INTEGER NOT NULL,
+    weekday         INTEGER NOT NULL) 
 """)
 
 # STAGING TABLES
@@ -186,6 +186,15 @@ WHERE  artist_id IS NOT NULL
 """)
 
 time_table_insert = ("""
+INSERT INTO time (start_time, hour, day, week, month, year, weekday)
+SELECT timestamp 'epoch' + time_stamp /1000 * interval '1 second' AS start_time,
+       EXTRACT(hour    FROM start_time)     AS hour,
+       EXTRACT(day     FROM start_time)     AS day,
+       EXTRACT(week    FROM start_time)     AS week,
+       EXTRACT(month   FROM start_time)     AS month,
+       EXTRACT(year    FROM start_time)     AS year,
+       EXTRACT(weekday FROM start_time)     AS weekday
+FROM   staging_events
 """)
 
 # QUERY LISTS
@@ -194,6 +203,4 @@ create_table_queries = [staging_events_table_create, staging_songs_table_create,
 
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 copy_table_queries = [staging_songs_copy, staging_events_copy]
-insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert,
-                        artist_table_insert]
-#insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
+insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
