@@ -72,19 +72,19 @@ staging_songs_table_create = ("""CREATE TABLE IF NOT EXISTS staging_songs (
 """)
 
 songplay_table_create= ("""CREATE TABLE IF NOT EXISTS songplays (
-    songplay_id     INTEGER IDENTITY(0,1),
-    start_time      BIGINT,
-    user_id         INTEGER,
-    level           VARCHAR,
-    song_id         VARCHAR,
-    artist_id       VARCHAR,
-    session_id      INTEGER,
+    songplay_id     INTEGER NOT NULL       IDENTITY(0,1),
+    start_time      BIGINT  NOT NULL       SORTKEY,
+    user_id         INTEGER NOT NULL       DISTKEY,
+    level           VARCHAR NOT NULL,
+    song_id         VARCHAR NOT NULL,
+    artist_id       VARCHAR NOT NULL,
+    session_id      INTEGER NOT NULL,
     location        VARCHAR,
     user_agent      VARCHAR);
 """)
 
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users (
-    user_id         INTEGER NOT NULL UNIQUE,
+    user_id         INTEGER NOT NULL UNIQUE SORTKEY DISTKEY,
     first_name      VARCHAR NOT NULL,
     last_name       VARCHAR NOT NULL,
     gender          VARCHAR NOT NULL,
@@ -92,29 +92,32 @@ user_table_create = ("""CREATE TABLE IF NOT EXISTS users (
 """)
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS songs (
-    song_id         VARCHAR NOT NULL UNIQUE,
+    song_id         VARCHAR NOT NULL UNIQUE SORTKEY,
     title           VARCHAR NOT NULL,
     artist_id       VARCHAR NOT NULL,
     year            INTEGER NOT NULL,
-    duration        NUMERIC NOT NULL);
+    duration        NUMERIC NOT NULL)
+    DISTSTYLE ALL;
 """)
 
 artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists (
-    artist_id       VARCHAR NOT NULL UNIQUE,
+    artist_id       VARCHAR NOT NULL UNIQUE SORTKEY,
     name            VARCHAR NOT NULL,
     location        VARCHAR,
     latitude        NUMERIC,
-    longitude       NUMERIC);
+    longitude       NUMERIC)
+    DISTSTYLE ALL;
 """)
 
 time_table_create = ("""CREATE TABLE IF NOT EXISTS time (
-    start_time      DATE NOT NULL UNIQUE,
+    start_time      DATE    NOT NULL UNIQUE SORTKEY,
     hour            INTEGER NOT NULL,
     day             INTEGER NOT NULL,
     week            INTEGER NOT NULL,
     month           INTEGER NOT NULL,
     year            INTEGER NOT NULL,
-    weekday         INTEGER NOT NULL) 
+    weekday         INTEGER NOT NULL)
+    DISTSTYLE ALL;
 """)
 
 # STAGING TABLES
