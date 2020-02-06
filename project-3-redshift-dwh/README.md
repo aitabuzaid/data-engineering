@@ -62,9 +62,9 @@ LIMIT 3
 
 | user_id | first_name | last_name  |  level |  count |
 |---------|------------|------------|--------|--------|
-| 49      | Chloe      |   Cuevas   |  paid  |  689   |
-| 80      | Tegan      |   Levine   |  paid  |  665   |
-| 97      | kate       |   Harell   |  paid  |  557   |
+| 49      | Chloe      |   Cuevas   |  paid  |  42    |
+| 80      | Tegan      |   Levine   |  free  |  42    |
+| 97      | kate       |   Harell   |  paid  |  32    |
 
 ### Query 2
 
@@ -74,7 +74,7 @@ LIMIT 3
 
 | level | count |
 |-------|-------|
-| free  |  74   |
+| free  |  83   |
 | paid  |  22   |
 
 ### Query 3
@@ -83,5 +83,5 @@ LIMIT 3
 
 | gender | count |
 |--------|-------|
-| male   |  55   |
-| female |  41   |
+| male   |  45   |
+| female |  60   |
