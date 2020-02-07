@@ -1,8 +1,8 @@
 ## Creating a Data Warehouse for Sparkify Music App Using AWS Redshift 
 Author: Abdulrahman Abuzaid
-Date: Feb , 2020
+Date: Feb 7, 2020
 
-This project creates a data warehouse for the Sparkify music app using AWS (Amazon Web Services) Redshift. The redshift cluster reads JSON files from two sources: log data for the app and song data. The program reads the data into two corresponding stage tables and subsequently loads the data into the final tables, which as created using the star schema as explained in the following section.
+This project creates a data warehouse for the Sparkify music app using AWS (Amazon Web Services) Redshift. The redshift cluster reads JSON files from two sources: log data for the app and song data. The program reads the data into two corresponding staging tables and subsequently loads the data into the final tables, which are created using the star schema as explained in the following section.
 
 The new database helps Sparkify answer their analytical questions such as:
  - Which song is most listened to?
@@ -63,7 +63,7 @@ LIMIT 3
 | user_id | first_name | last_name  |  level |  count |
 |---------|------------|------------|--------|--------|
 | 49      | Chloe      |   Cuevas   |  paid  |  42    |
-| 80      | Tegan      |   Levine   |  free  |  42    |
+| 49      | Chloe      |   Cuevas   |  free  |  42    |
 | 97      | kate       |   Harell   |  paid  |  32    |
 
 ### Query 2
