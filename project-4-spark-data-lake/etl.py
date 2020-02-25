@@ -105,7 +105,8 @@ def process_log_data(spark, input_data, output_data):
     
     songplays_table = songplays_table\
         .withColumn("start_time", (F.to_timestamp(songplays_table.start_time/1000)))\
-        .withColumn("songplay_id", F.monotonically_increasing_id())\
+        .withColumn("songplay_id", F.monotonically_increasing_id())
+    songplays_table = songplays_table\
         .withColumn("year", F.year(songplays_table.start_time))\
         .withColumn("month", F.month(songplays_table.start_time))
 
@@ -116,13 +117,13 @@ def process_log_data(spark, input_data, output_data):
     print("Saved the songplays table as parquet files")
     
     # extract columns to create time table
-    time_table = songplays.select(songplays.start_time)\
-        .withColumn("hour", F.hour(time_table.start_time))\
-        .withColumn("day", F.dayofmonth(time_table.start_time))\
-        .withColumn("week", F.weekofyear(time_table.start_time))\
-        .withColumn("month", F.month(time_table.start_time))\
-        .withColumn("year", F.year(time_table.start_time))\
-        .withColumn("weekday", F.dayofweek(time_table.start_time))
+    time_table = songplays_table.select(songplays_table.start_time)\
+        .withColumn("hour", F.hour(songplays_table.start_time))\
+        .withColumn("day", F.dayofmonth(songplays_table.start_time))\
+        .withColumn("week", F.weekofyear(songplays_table.start_time))\
+        .withColumn("month", F.month(songplays_table.start_time))\
+        .withColumn("year", F.year(songplays_table.start_time))\
+        .withColumn("weekday", F.dayofweek(songplays_table.start_time))
     
     # write time table to parquet files partitioned by year and month
     time_table.write\
