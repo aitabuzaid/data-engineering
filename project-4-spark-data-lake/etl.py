@@ -4,6 +4,7 @@ import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf, col
 import pyspark.sql.functions as F
+from pyspark.sql.types import IntegerType
 
 
 config = configparser.ConfigParser()
@@ -67,17 +68,17 @@ def process_log_data(spark, input_data, output_data):
     df = df.where(df.page == 'NextSong')
 
     # extract columns for users table    
-    users_table = log_data.filter((col('userId').isNotNull()) 
-                                & (col('userId') != ''))\
-                          .orderBy(['ts'], ascending = False)\
-                          .selectExpr(["userId as user_id",
-                                       "firstName AS first_name",
-                                       "lastName AS last_name",
-                                       "gender",
-                                       "level"])\
-                          .dropDuplicates(subset=['user_id'])\
-                          .withColumn("user_id", col("user_id").cast(IntegerType()))\
-                          .orderBy(['user_id'])
+    users_table = df.filter((col('userId').isNotNull()) 
+                          & (col('userId') != ''))\
+                    .orderBy(['ts'], ascending = False)\
+                    .selectExpr(["userId as user_id",
+                                 "firstName AS first_name",
+                                 "lastName AS last_name",
+                                 "gender",
+                                 "level"])\
+                    .dropDuplicates(subset=['user_id'])\
+                    .withColumn("user_id", col("user_id").cast(IntegerType()))\
+                    .orderBy(['user_id'])
     
     # write users table to parquet files
     users_table.write\
