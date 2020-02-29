@@ -1,9 +1,9 @@
 ## Creating a Data Lake for Sparkify Music App Using Spark Run on AWS EMR and S3 
 Author: Abdulrahman Abuzaid
-Date: Feb , 2020
+Date: Feb 29, 2020
 
 
-The new database helps Sparkify answer their analytical questions such as:
+The new data lake helps Sparkify answer analyze their data by raising questions such as:
  - Which song is most listened to?
  - Which user is using the app the most?
  - What is the percentage of users that have paid subscription?
@@ -12,45 +12,21 @@ The new database helps Sparkify answer their analytical questions such as:
  
 
 
-
 ## Packages Used
-
+ - pyspark
+ - datetime
+ - os
  
 ## Execution Guide
+ - Create an EMR cluster on AWS
+ - Create a new 'pem' key pair or use an existing one
+ - Configure the cluster to be accessed through SSH (enable port 22)
+ - If using Windows: Use PUTTYGen to convert the 'pem' into 'pkk' key pair 
+ - Connect (SSH into) to the cluster. PUTTY is a great option for Windows
+ - Create an S3 folder for output files and the python scrip file (use same region as EMR)
+ - Upload the etl.py scrip into your S3 folder
+ - Run command in EMR console:
+ 
+     --> spark-submit --master yarn S3://your-bucket/etl.py
+ - Once the program finishes, confirm that parquet files are save in five separate folders.
 
-
-## Sample Queries
-### Query 1
-%sql SELECT songplays.user_id, users.first_name, users.last_name, users.level, COUNT(songplays.user_id)  \
-FROM songplays JOIN users ON songplays.user_id = users.user_id \
-GROUP BY songplays.user_id, users.first_name, users.last_name, users.level \
-ORDER BY count DESC \
-LIMIT 3
-
-### Result
-
-| user_id | first_name | last_name  |  level |  count |
-|---------|------------|------------|--------|--------|
-| 49      | Chloe      |   Cuevas   |  paid  |  42    |
-| 80      | Tegan      |   Levine   |  free  |  42    |
-| 97      | kate       |   Harell   |  paid  |  32    |
-
-### Query 2
-
-%sql SELECT level, COUNT(user_id) FROM users GROUP BY level
-
-### Result
-
-| level | count |
-|-------|-------|
-| free  |  83   |
-| paid  |  22   |
-
-### Query 3
-
-%sql SELECT gender, COUNT(user_id) FROM users GROUP BY gender
-
-| gender | count |
-|--------|-------|
-| male   |  45   |
-| female |  60   |
