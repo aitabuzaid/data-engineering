@@ -2,6 +2,8 @@
 Author: Abdulrahman Abuzaid
 Date: Feb 29, 2020
 
+This project creates a data lake that allows the music streaming startup, Sarkify, to manage their growing database. The JSON files are hosted in an S3 bucket, and Sparkify want to build an ETL pipeline that extracts this data from S3, processes it using Spark on Amazon EMR, and the loads it back into S3 as fact and dimension tables in the form of parquet files. These files will be used by the analytics team to run queries and find insights in the data.
+
 
 The new data lake helps Sparkify answer analyze their data by raising questions such as:
  - Which song is most listened to?
