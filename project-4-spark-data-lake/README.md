@@ -30,5 +30,5 @@ The new data lake helps Sparkify answer analyze their data by raising questions 
  - Run command in EMR console:
  
      --> spark-submit --master yarn S3://your-bucket/etl.py
- - Once the program finishes, confirm that parquet files are save in five separate folders.
+ - Once the program finishes, confirm that parquet files are saved in five separate folders.
 
