@@ -8,15 +8,27 @@ class LoadDimensionOperator(BaseOperator):
 
     @apply_defaults
     def __init__(self,
-                 # Define your operators params (with defaults) here
-                 # Example:
-                 # conn_id = your-connection-name
+                 redshift_conn_id="",
+                 sql="",
+                 table="",
+                 delete_flag=False,
+                 columns="",
                  *args, **kwargs):
 
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
-        # Map params here
-        # Example:
-        # self.conn_id = conn_id
+        self.redshift_conn_id=redshift_conn_id
+        self.sql=sql
+        self.table=table
+        self.delete_flag=delete_flag
+        self.columns=columns
 
     def execute(self, context):
-        self.log.info('LoadDimensionOperator not implemented yet')
+        self.log.info("Loading the dimensions table {} in progress".format(
+                        self.table))
+        redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
+        if(self.delete_flag):
+            redshift.run("DELETE FROM {}".format(self.table))
+            
+        full_sql = "INSERT INTO {} {} ".format(self.table, self.columns)
+        full_sql += self.sql
+        redshift.run(full_sql)
