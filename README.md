@@ -4,5 +4,5 @@ A collection of personal Data Engineering projects as a results of completing th
  - Cassandra NoSQL Database for Sparkify Music App
  - Data Warehouse for Sparkify Music App Using AWS Redshift
  - Data Lake for Sparkify Music App Using AWS EMR and Apache Spark
- - Data Pipeline (DAG) for Sparkify Music App Using Apache Spark
+ - Data Pipeline (DAG) for Sparkify Music App Using Apache Airflow
  - Data Lake for US Immigration Data
